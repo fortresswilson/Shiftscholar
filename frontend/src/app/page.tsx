@@ -1,6 +1,8 @@
+import Navbar from "@/components/Navbar";
 export default function Home() {
   return (
     <main>
+      <Navbar />
       <h1>ShiftScholar</h1>
 
       <p>
