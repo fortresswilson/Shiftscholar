@@ -1,5 +1,6 @@
 import ScheduleCard from "@/components/dashboard/ScheduleCard";
 import NextBestStepCard from "@/components/dashboard/NextBestStepCard";
+import TasksCard from "@/components/dashboard/TasksCard";
 const todaySchedule = [
   {
     time: "11:45 AM",
@@ -18,6 +19,32 @@ const recommendation = {
   endTime: "3:00 PM",
   reason: "You have free time between your classes today.",
 };
+const tasks = [
+  {
+    id: 1,
+    title: "Computer Vision Assignment",
+    due: "Tomorrow",
+    duration: 4,
+    priority: "High",
+    status: "Not started",
+  },
+  {
+    id: 2,
+    title: "Networking Homework",
+    due: "Friday",
+    duration: 2,
+    priority: "Medium",
+    status: "Not started",
+  },
+  {
+    id: 3,
+    title: "Thesis Research",
+    due: "Monday",
+    duration: 3,
+    priority: "Medium",
+    status: "In progress",
+  },
+];
 
 export default function Dashboard() {
   return (
@@ -42,6 +69,7 @@ export default function Dashboard() {
 
          
 <NextBestStepCard recommendation={recommendation} />
+<TasksCard tasks={tasks} />
         </div>
       </div>
     </main>
