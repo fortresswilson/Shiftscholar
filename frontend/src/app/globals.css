@@ -47,5 +47,5 @@ body {
 }
 
 .soft-shake {
-  animation: soft-shake 0.6s ease-in-out 8;
+  animation: soft-shake 0.6s ease-in-out infinite;
 }
