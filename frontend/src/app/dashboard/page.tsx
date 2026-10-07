@@ -13,38 +13,62 @@ const todaySchedule = [
     type: "Class",
   },
 ];
-const recommendation = {
-  task: "Computer Vision Assignment",
-  startTime: "1:00 PM",
-  endTime: "3:00 PM",
-  reason: "You have free time between your classes today.",
-};
+
 const tasks = [
   {
     id: 1,
     title: "Computer Vision Assignment",
-    due: "Tomorrow",
-    duration: 4,
+    dueDate: "2026-10-07",
+    remainingHours: 4,
     priority: "High",
     status: "Not started",
   },
   {
     id: 2,
     title: "Networking Homework",
-    due: "Friday",
-    duration: 2,
+    dueDate: "2026-10-09",
+    remainingHours: 10,
     priority: "Medium",
     status: "Not started",
   },
   {
     id: 3,
     title: "Thesis Research",
-    due: "Monday",
-    duration: 3,
+    dueDate: "2026-10-12",
+    remainingHours: 3,
     priority: "Medium",
     status: "In progress",
   },
 ];
+
+
+
+
+function calculateTaskPressure(
+  remainingHours: number,
+  dueDate: string
+) {
+  const daysUntilDue = getDaysUntilDue(dueDate);
+
+  const availableDays = Math.max(daysUntilDue, 1);
+
+  return remainingHours / availableDays;
+}
+
+const tasksByPressure = [...tasks].sort(
+  (a, b) =>
+    calculateTaskPressure(b.remainingHours, b.dueDate) -
+    calculateTaskPressure(a.remainingHours, a.dueDate)
+);
+const recommendedTask = tasksByPressure[0];
+const recommendation = {
+  task: recommendedTask.title,
+  startTime: "1:00 PM",
+  endTime: "3:00 PM",
+  reason: "This task currently has the highest workload pressure.",
+};
+
+
 
 export default function Dashboard() {
   return (
