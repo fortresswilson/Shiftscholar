@@ -180,7 +180,20 @@ function addDemoCommitment() {
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
 
           <ScheduleCard schedule={todaySchedule} />
+          <div className="mt-3 flex items-center gap-3">
+  <button
+    onClick={addDemoCommitment}
+    className="demo-pulse rounded-lg border border-emerald-500 px-4 py-2 text-sm font-medium text-emerald-400 hover:bg-emerald-500/10"
+  >
+    + Add Demo Commitment
+  </button>
 
+  {commitmentMessage && (
+    <span className="text-sm text-slate-400">
+      {commitmentMessage}
+    </span>
+  )}
+</div>
          
 <NextBestStepCard recommendation={recommendation} />
 <TasksCard tasks={tasks} />
