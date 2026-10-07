@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getDaysUntilDue } from "@/lib/dateUtils";
 
 import ScheduleCard from "@/components/dashboard/ScheduleCard";
@@ -116,6 +116,30 @@ export default function Dashboard() {
     type: "Class",
   },
 ]);
+const [currentDate, setCurrentDate] = useState("");
+const [greeting, setGreeting] = useState("");
+
+useEffect(() => {
+  const now = new Date();
+
+  setCurrentDate(
+    now.toLocaleDateString(undefined, {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    })
+  );
+
+  const currentHour = now.getHours();
+
+  setGreeting(
+    currentHour < 12
+      ? "Good morning."
+      : currentHour < 17
+        ? "Good afternoon."
+        : "Good evening."
+  );
+}, []);
 const [commitmentMessage, setCommitmentMessage] = useState("");
 const freeTime = findFreeTime(todaySchedule);
 const tasksByPressure = [...tasks].sort(
@@ -166,11 +190,11 @@ function addDemoCommitment() {
       <div className="mx-auto max-w-7xl px-6 py-10">
 
         <p className="text-sm font-semibold text-emerald-400">
-          Tuesday, September 29
+        {currentDate}
         </p>
 
         <h1 className="mt-2 text-3xl font-bold tracking-tight">
-          Good morning.
+          {greeting}
         </h1>
 
         <p className="mt-2 text-slate-400">
