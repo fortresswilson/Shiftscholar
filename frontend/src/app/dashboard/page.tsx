@@ -97,22 +97,70 @@ function calculateTaskPressure(
   return remainingHours / availableDays;
 }
 
+
+
+
+
+export default function Dashboard() {
+  const [todaySchedule, setTodaySchedule] = useState([
+  {
+    startTime: "11:45 AM",
+    endTime: "1:00 PM",
+    title: "Advanced Networking",
+    type: "Class",
+  },
+  {
+    startTime: "5:15 PM",
+    endTime: "6:30 PM",
+    title: "Computer Vision",
+    type: "Class",
+  },
+]);
+const [commitmentMessage, setCommitmentMessage] = useState("");
+const freeTime = findFreeTime(todaySchedule);
 const tasksByPressure = [...tasks].sort(
   (a, b) =>
     calculateTaskPressure(b.remainingHours, b.dueDate) -
     calculateTaskPressure(a.remainingHours, a.dueDate)
 );
+
 const recommendedTask = tasksByPressure[0];
+
 const recommendation = {
   task: recommendedTask.title,
-  startTime: "1:00 PM",
-  endTime: "3:00 PM",
-  reason: "This task currently has the highest workload pressure.",
+  startTime: freeTime.startTime,
+  endTime: freeTime.endTime,
+  reason:
+    "This task has the highest workload pressure and fits your available time.",
 };
 
+function addDemoCommitment() {
+  const alreadyAdded = todaySchedule.some(
+    (item) => item.title === "Work Shift"
+  );
 
+  if (alreadyAdded) {
+    setCommitmentMessage("Work Shift already added");
+    return;
+  }
 
-export default function Dashboard() {
+  const newCommitment = {
+    startTime: "2:00 PM",
+    endTime: "4:00 PM",
+    title: "Work Shift",
+    type: "Work",
+  };
+
+  const updatedSchedule = [...todaySchedule, newCommitment];
+
+  updatedSchedule.sort(
+    (a, b) =>
+      timeToMinutes(a.startTime) - timeToMinutes(b.startTime)
+  );
+
+  setTodaySchedule(updatedSchedule);
+  setCommitmentMessage("Work Shift added — schedule recalculated");
+}
   return (
     <main className="min-h-screen bg-slate-950 text-white">
       <div className="mx-auto max-w-7xl px-6 py-10">
