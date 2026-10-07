@@ -1,21 +1,10 @@
 "use client";
+import { useState } from "react";
 import { getDaysUntilDue } from "@/lib/dateUtils";
 
 import ScheduleCard from "@/components/dashboard/ScheduleCard";
 import NextBestStepCard from "@/components/dashboard/NextBestStepCard";
 import TasksCard from "@/components/dashboard/TasksCard";
-const todaySchedule = [
-  {
-    time: "11:45 AM",
-    title: "Advanced Networking",
-    type: "Class",
-  },
-  {
-    time: "5:15 PM",
-    title: "Computer Vision",
-    type: "Class",
-  },
-];
 
 const tasks = [
   {
@@ -44,6 +33,56 @@ const tasks = [
   },
 ];
 
+function timeToMinutes(time: string) {
+  const [timePart, period] = time.split(" ");
+  const [hourString, minuteString] = timePart.split(":");
+
+  let hour = Number(hourString);
+  const minute = Number(minuteString);
+
+  if (period === "PM" && hour !== 12) {
+    hour += 12;
+  }
+
+  if (period === "AM" && hour === 12) {
+    hour = 0;
+  }
+
+  return hour * 60 + minute;
+}
+
+function minutesToTime(totalMinutes: number) {
+  const hours24 = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  const period = hours24 >= 12 ? "PM" : "AM";
+  const hours12 = hours24 % 12 || 12;
+
+  return `${hours12}:${String(minutes).padStart(2, "0")} ${period}`;
+}
+type ScheduleItem = {
+  startTime: string;
+  endTime: string;
+  title: string;
+  type: string;
+};
+function findFreeTime(schedule: ScheduleItem[]) {
+  const firstCommitment = schedule[0];
+  const secondCommitment = schedule[1];
+
+  const freeStart = timeToMinutes(firstCommitment.endTime);
+  const freeEnd = timeToMinutes(secondCommitment.startTime);
+
+  const freeMinutes = freeEnd - freeStart;
+
+  const focusMinutes = Math.min(freeMinutes, 90);
+
+  return {
+    startTime: minutesToTime(freeStart),
+    endTime: minutesToTime(freeStart + focusMinutes),
+    durationMinutes: focusMinutes,
+  };
+}
 
 
 

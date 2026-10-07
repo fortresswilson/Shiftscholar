@@ -1,5 +1,6 @@
 type ScheduleItem = {
-  time: string;
+  startTime: string;
+  endTime: string;
   title: string;
   type: string;
 };
@@ -19,7 +20,7 @@ export default function ScheduleCard({ schedule }: ScheduleCardProps) {
         {schedule.map((item) => (
           <div key={item.title} className="flex items-start gap-4">
             <p className="w-20 text-sm text-slate-400">
-              {item.time}
+              {item.startTime} – {item.endTime}
             </p>
 
             <div>
