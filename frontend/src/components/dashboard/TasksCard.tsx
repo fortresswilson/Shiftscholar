@@ -1,3 +1,6 @@
+"use client";
+
+import { getDaysUntilDue } from "@/lib/dateUtils";
 type Task = {
   id: number;
   title: string;
@@ -10,6 +13,21 @@ type Task = {
 type TasksCardProps = {
   tasks: Task[];
 };
+
+// Turns the stored date into friendly text for the user
+function formatDueDate(dueDate: string) {
+  const differenceInDays = getDaysUntilDue(dueDate);
+
+  if (differenceInDays < 0) {
+    return `overdue by ${Math.abs(differenceInDays)} days`;
+  }
+
+  if (differenceInDays === 0) return "today";
+  if (differenceInDays === 1) return "tomorrow";
+
+  return `in ${differenceInDays} days`;
+}
+
 export default function TasksCard({ tasks }: TasksCardProps) {
   return (
     <section className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 lg:col-span-2">

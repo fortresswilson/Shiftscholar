@@ -1,3 +1,6 @@
+"use client";
+import { getDaysUntilDue } from "@/lib/dateUtils";
+
 import ScheduleCard from "@/components/dashboard/ScheduleCard";
 import NextBestStepCard from "@/components/dashboard/NextBestStepCard";
 import TasksCard from "@/components/dashboard/TasksCard";
