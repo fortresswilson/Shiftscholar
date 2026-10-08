@@ -5,6 +5,7 @@ import { getDaysUntilDue } from "@/lib/dateUtils";
 import ScheduleCard from "@/components/dashboard/ScheduleCard";
 import NextBestStepCard from "@/components/dashboard/NextBestStepCard";
 import TasksCard from "@/components/dashboard/TasksCard";
+import FocusTimer from "@/components/dashboard/FocusTimer";
 
 const tasks = [
   {
@@ -221,6 +222,11 @@ function addDemoCommitment() {
          
 <NextBestStepCard recommendation={recommendation} />
 <TasksCard tasks={tasks} />
+<NextBestStepCard recommendation={recommendation} />
+<FocusTimer
+  task={recommendedTask.title}
+  durationMinutes={freeTime?.durationMinutes ?? 90}
+/>
         </div>
       </div>
     </main>
