@@ -15,8 +15,10 @@ export default function FocusTimer({
   const [secondsLeft, setSecondsLeft] = useState(
     durationMinutes * 60
   );
+  
   const [isRunning, setIsRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  
 
   useEffect(() => {
     if (!isRunning || secondsLeft <= 0) return;

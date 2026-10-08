@@ -224,9 +224,13 @@ function addDemoCommitment() {
 <TasksCard tasks={tasks} />
 <NextBestStepCard recommendation={recommendation} />
 <FocusTimer
+    
+  key={freeTime?.durationMinutes ?? 90}
   task={recommendedTask.title}
   durationMinutes={freeTime?.durationMinutes ?? 90}
 />
+
+
         </div>
       </div>
     </main>
